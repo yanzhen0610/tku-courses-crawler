@@ -1,43 +1,15 @@
-import http.client
-import urllib.parse
+# import http.client
+# import urllib.parse
+import utils
 from bs4 import BeautifulSoup as Soup
 
 
 def get_departments() -> dict:
     def get_page(college=''):
-        headers = {
-            'Host': 'esquery.tku.edu.tw',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Connection': 'close',
-        }
-        body = urllib.parse.urlencode({
-            'depts': college,
-        })
-        re_state = False
-        re_reason = False
-        try:
-            connection = http.client.HTTPConnection('esquery.tku.edu.tw', 80, timeout=10)
-            connection.request(
-                'POST',
-                '/acad/query.asp',
-                headers=headers,
-                body=body
-            )
-            with connection.getresponse() as response:
-                re_state, re_reason = response.status, response.reason
-                print(response.status, response.reason)
-                print(response.headers)
-                return response.read().decode('utf-8')
-        except Exception as exception:
-            print('failed to fetch [http://esquery.tku.edu.tw:80/acad/query/result.asp]')
-            if re_state:
-                print(re_state)
-            if re_reason:
-                print(re_reason)
-            print('Method:', 'POST')
-            print('Headers:', headers)
-            print('Body:', body)
-            raise exception
+        return utils.http_post('esquery.tku.edu.tw',
+                               '/acad/query.asp',
+                               {'depts': college},
+                               False)
 
     def get_colleges(page) -> set:
         colleges = set()
