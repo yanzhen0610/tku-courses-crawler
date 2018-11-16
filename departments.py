@@ -1,5 +1,3 @@
-# import http.client
-# import urllib.parse
 import utils
 from bs4 import BeautifulSoup as Soup
 
@@ -13,8 +11,8 @@ def get_departments() -> dict:
 
     def get_colleges(page) -> set:
         colleges = set()
-        first = Soup(page, 'html5lib')
-        table = first.select('table')[5]
+        soup = Soup(page, 'html5lib')
+        table = soup.select('table')[5]
         first_row = table.select('tr')[0]
         colleges_select = first_row.select('select')[0]
         colleges_options = colleges_select.select('option')
@@ -27,8 +25,8 @@ def get_departments() -> dict:
 
     def get_departs(page) -> set:
         departments = set()
-        first = Soup(page, 'html5lib')
-        table = first.select('table')[5]
+        soup = Soup(page, 'html5lib')
+        table = soup.select('table')[5]
         first_row = table.select('tr')[0]
         departments_select = first_row.select('select')[2]
         departments_options = departments_select.select('option')
@@ -57,4 +55,5 @@ def get_departments() -> dict:
 
 
 if __name__ == '__main__':
-    print(get_departments())
+    import pprint
+    pprint.PrettyPrinter(indent=4).pprint(get_departments())

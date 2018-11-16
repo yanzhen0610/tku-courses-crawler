@@ -12,14 +12,9 @@ def http_post(host, path, kv: dict, https: bool):
     re_state = False
     re_reason = False
     try:
-        C = http.client.HTTPSConnection if https else http.client.HTTPConnection
-        connection = C(host, 80, timeout=10)
-        connection.request(
-            'POST',
-            path,
-            headers=headers,
-            body=body
-        )
+        client = http.client.HTTPSConnection if https else http.client.HTTPConnection
+        connection = client(host, 80, timeout=10)
+        connection.request('POST', path, headers=headers, body=body)
         with connection.getresponse() as response:
             re_state, re_reason = response.status, response.reason
             print(response.status, response.reason)
