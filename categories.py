@@ -9,7 +9,7 @@ def get_categories() -> dict:
                                {'other': category},
                                False)
 
-    def get_cats(page) -> set:
+    def parse_to_get_categories(page) -> set:
         categories = set()
         soup = Soup(page, 'html5lib')
         table = soup.select('table')[5]
@@ -23,7 +23,7 @@ def get_categories() -> dict:
             )))
         return categories
 
-    def get_programs(page) -> set:
+    def parse_to_get_programs(page) -> set:
         programs = set()
         soup = Soup(page, 'html5lib')
         table = soup.select('table')[5]
@@ -41,11 +41,11 @@ def get_categories() -> dict:
 
         result = dict()
 
-        for category in get_cats(get_page()):
+        for category in parse_to_get_categories(get_page()):
             result[category] = None
 
         for key in result.keys():
-            result[key] = get_programs(get_page(key[0]))
+            result[key] = parse_to_get_programs(get_page(key[0]))
 
         return result
 

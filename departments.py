@@ -9,7 +9,7 @@ def get_departments() -> dict:
                                {'depts': college},
                                False)
 
-    def get_colleges(page) -> set:
+    def parse_to_get_colleges(page) -> set:
         colleges = set()
         soup = Soup(page, 'html5lib')
         table = soup.select('table')[5]
@@ -23,7 +23,7 @@ def get_departments() -> dict:
             )))
         return colleges
 
-    def get_departs(page) -> set:
+    def parse_to_get_departments(page) -> set:
         departments = set()
         soup = Soup(page, 'html5lib')
         table = soup.select('table')[5]
@@ -41,11 +41,11 @@ def get_departments() -> dict:
 
         result = dict()
 
-        for college in get_colleges(get_page()):
+        for college in parse_to_get_colleges(get_page()):
             result[college] = None
 
         for key in result.keys():
-            result[key] = get_departs(get_page(key[0]))
+            result[key] = parse_to_get_departments(get_page(key[0]))
 
         return result
 
