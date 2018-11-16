@@ -72,7 +72,7 @@ def get_departments() -> dict:
         result = dict()
 
         for college in get_colleges(get_page()):
-            result[college] = set()
+            result[college] = None
 
         for key in result.keys():
             result[key] = get_departs(get_page(key[0]))
