@@ -3,6 +3,29 @@ import re
 
 
 def parse(page) -> set:
+    """
+    :param page:
+    :return:
+    (
+        grade,
+        control_number,
+        course_number,
+        trade,
+        section,
+        class,
+        group,
+        required_or_selective,
+        credits,
+        field,
+        course_name,
+        course_remark,
+        enrollment_maximum,
+        instructor,
+        day_hour_classroom1,
+        day_hour_classroom2,
+        department,
+    )
+    """
     try:
 
         result = set()
@@ -28,9 +51,9 @@ def parse(page) -> set:
                     td[11].p.contents[2].string.strip(),  # course_remark
                     td[12].string.strip(),  # enrollment_maximum
                     (td[13].a if td[13].a else td[13].p).string.strip(),  # instructor
-                    td[14].string.strip(),  # day_and_hour1
-                    td[15].string.strip(),  # day_and_hour2
-                    department,
+                    td[14].string.strip(),  # day_hour_classroom1
+                    td[15].string.strip(),  # day_hour_classroom2
+                    department,  # department
                 )
                 result.add(course_info)
             elif len(td) == 1:
