@@ -67,9 +67,9 @@ def get_departments() -> dict:
             )))
         return departments
 
-    result = dict()
-
     try:
+
+        result = dict()
 
         for college in get_colleges(get_page()):
             result[college] = set()
@@ -77,11 +77,11 @@ def get_departments() -> dict:
         for key in result.keys():
             result[key] = get_departs(get_page(key[0]))
 
+        return result
+
     except Exception as exception:
         print('Seems like the structure of this page has changed [http://esquery.tku.edu.tw/acad/query/result.asp]')
         raise exception
-
-    return result
 
 
 if __name__ == '__main__':
