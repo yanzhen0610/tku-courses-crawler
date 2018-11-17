@@ -2,31 +2,10 @@ from bs4 import BeautifulSoup as Soup
 import re
 import itertools
 import utils
+from contract import RawCourseData
 
 
 def parse(page) -> set:
-    """
-    :param page:
-    :return:
-    (
-        grade,
-        control_number,
-        course_number,
-        trade,
-        section,
-        class,
-        group,
-        required_or_selective,
-        credits,
-        field,
-        course_name,
-        course_remark,
-        enrollment_maximum,
-        instructor,
-        day_hour_classroom,
-        department,
-    )
-    """
     try:
 
         result = set()
@@ -58,7 +37,7 @@ def parse(page) -> set:
                     )),  # day_hour_classroom
                     department,  # department
                 )
-                result.add(course_info)
+                result.add(RawCourseData(course_info))
             elif len(td) == 1:
                 department = td[0].b.string.strip()
                 match = re.search('.*Department.*?([A-za-z0-9]+).', department)
