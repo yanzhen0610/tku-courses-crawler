@@ -32,7 +32,7 @@ def parse(page) -> set:
         result = set()
 
         soup = Soup(page, 'html5lib')
-        table = soup.select('table')[1]
+        table = soup.select('table')[-1]
         department = 'unknown'
         for row in table.select('tr'):
             td = row.select('td')
@@ -49,7 +49,7 @@ def parse(page) -> set:
                     td[9].string.strip(),  # credits
                     td[10].string.strip(),  # field
                     td[11].font.string.strip(),  # course_name
-                    td[11].p.contents[2].string.strip(),  # course_remark
+                    td[11].p.contents[-1].string.strip(),  # course_remark
                     td[12].string.strip(),  # enrollment_maximum
                     ''.join(td[13].p.stripped_strings).strip(),  # instructor
                     tuple(itertools.chain(
