@@ -102,3 +102,15 @@ def get_courses_of_departments(department) -> str:
                                'level': 999,
                            },
                            False)
+
+
+def get_courses_of_programs(program) -> str:
+    return utils.http_post('esquery.tku.edu.tw',
+                           '/acad/query_result.asp',
+                           {
+                               'func': 'go',
+                               'R1': 5,
+                               'sgn2': '-',
+                               'others': program,
+                           },
+                           False)
