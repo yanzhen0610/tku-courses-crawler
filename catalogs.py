@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup as Soup
 import re
+import itertools
+import utils
 
 
 def parse(page) -> set:
@@ -21,8 +23,7 @@ def parse(page) -> set:
         course_remark,
         enrollment_maximum,
         instructor,
-        day_hour_classroom1,
-        day_hour_classroom2,
+        day_hour_classroom,
         department,
     )
     """
@@ -38,7 +39,7 @@ def parse(page) -> set:
             if len(td) == 16:
                 course_info = (
                     td[1].string.strip(),  # grade
-                    td[2].font.string.strip(),  # control_number
+                    ''.join(td[2].stripped_strings).strip(),  # control_number
                     td[3].string.strip(),  # course_number
                     td[4].string.strip(),  # trade
                     td[5].string.strip(),  # section
@@ -50,9 +51,11 @@ def parse(page) -> set:
                     td[11].font.string.strip(),  # course_name
                     td[11].p.contents[2].string.strip(),  # course_remark
                     td[12].string.strip(),  # enrollment_maximum
-                    (td[13].a if td[13].a else td[13].p).string.strip(),  # instructor
-                    td[14].string.strip(),  # day_hour_classroom1
-                    td[15].string.strip(),  # day_hour_classroom2
+                    ''.join(td[13].p.stripped_strings).strip(),  # instructor
+                    tuple(itertools.chain(
+                        td[14].stripped_strings,
+                        td[15].stripped_strings
+                    )),  # day_hour_classroom
                     department,  # department
                 )
                 result.add(course_info)
@@ -71,3 +74,31 @@ def parse(page) -> set:
     except Exception as exception:
         print('The structure of the catalogs changed?')
         raise exception
+
+
+def get_courses_of_week(week: int, period: int) -> str:
+    return utils.http_post('esquery.tku.edu.tw',
+                           '/acad/query_result.asp',
+                           {
+                               'func': 'go',
+                               'R1': 4,
+                               'weekdepts': 'ALL',
+                               'weekdept': 'ALL',
+                               'week': week,
+                               'o1': period,
+                               'o2': period,
+                           },
+                           False)
+
+
+def get_courses_of_departments(department) -> str:
+    return utils.http_post('esquery.tku.edu.tw',
+                           '/acad/query_result.asp',
+                           {
+                               'func': 'go',
+                               'R1': 1,
+                               'sgn1': '-',
+                               'dept': department,
+                               'level': 999,
+                           },
+                           False)
