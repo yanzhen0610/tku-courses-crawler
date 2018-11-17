@@ -94,3 +94,6 @@ class Database:
 
     def commit(self):
         self.__connection.commit()
+        
+    def get_connection(self):
+        return self.__connection
