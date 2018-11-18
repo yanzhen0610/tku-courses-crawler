@@ -2,6 +2,11 @@
 crawl courses catalogs from http://esquery.tku.edu.tw
 
 **Note: 這不是選課小幫手！！！**
+
+**Note: 這不是選課小幫手！！！**
+
+**Note: 這不是選課小幫手！！！**
+
 ## Install required packages
 ```
 pip -r requirements.txt
