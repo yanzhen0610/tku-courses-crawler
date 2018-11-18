@@ -1,7 +1,6 @@
 import catalogs
 import departments
 import categories
-from contract import RawCourseData
 from database import Database
 
 
