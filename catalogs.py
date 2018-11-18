@@ -66,6 +66,7 @@ def get_courses_of_week(week: int, period: int) -> str:
                                'week': week,
                                'o1': period,
                                'o2': period,
+                               'weekcheck2': 'yes'
                            },
                            False)
 
