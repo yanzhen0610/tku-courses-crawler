@@ -118,7 +118,6 @@ class Database:
             *(repr(str(col)) for col in row.data),
             table_name=Database.RAW_COURSE_DATA_TABLE
         )
-        print(query)
         self.__connection.execute(query)
 
     def insert_raw_courses_data(self, data: iter):
