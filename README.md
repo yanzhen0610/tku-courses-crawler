@@ -1,6 +1,7 @@
 # tku-courses-crawler
 crawl courses catalogs from http://esquery.tku.edu.tw
-**Note: **
+
+**Note: 這不是選課小幫手！！！**
 ## Install required packages
 ```
 pip -r requirements.txt
