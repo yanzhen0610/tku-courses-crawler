@@ -23,3 +23,9 @@ class RawCourseData:
 
     def __repr__(self) -> str:
         return '\t'.join((str(e) for e in self.data))
+
+    def __eq__(self, other):
+        return hasattr(other, 'data') and self.data == other.data
+
+    def __hash__(self):
+        return hash(self.data)
