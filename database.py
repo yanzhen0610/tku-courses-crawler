@@ -41,6 +41,39 @@ class Database:
         self.__connection.commit()
         self.__connection.close()
 
+    def drop_and_create_raw_course_data_table(self):
+        self.__connection.execute(
+            '''
+            DROP TABLE IF EXISTS {table_name};
+            '''.format(
+                table_name=Database.RAW_COURSE_DATA_TABLE
+            ))
+        self.__connection.execute(
+            '''
+            CREATE TABLE IF NOT EXISTS {table_name}
+            (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                grade TEXT,
+                control_number TEXT,
+                course_number TEXT,
+                trade TEXT,
+                section TEXT,
+                class_ TEXT,
+                group_ TEXT,
+                required_or_selective TEXT,
+                credits TEXT,
+                field TEXT,
+                course_name TEXT,
+                course_remark TEXT,
+                enrollment_maximum TEXT,
+                instructor TEXT,
+                day_hour_classroom TEXT,
+                department TEXT
+            );
+            '''.format(
+                table_name=Database.RAW_COURSE_DATA_TABLE
+            ))
+
     def insert_raw_course_data(self, row: RawCourseData):
         query = '''
         INSERT INTO {table_name}
@@ -94,6 +127,6 @@ class Database:
 
     def commit(self):
         self.__connection.commit()
-        
+
     def get_connection(self):
         return self.__connection
